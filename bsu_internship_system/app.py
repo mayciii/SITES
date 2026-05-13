@@ -1,15 +1,4 @@
-"""
-BSU Internship Tracking System — Flask Backend
-Batangas State University Lipa Campus
 
-FIXES APPLIED:
-  1. app.run() moved to AFTER all route definitions (was cutting off /api/auth/profile,
-     /api/notifications, /api/students/<id> — they were NEVER registered).
-  2. SQL injection in attendance_summary patched (was using .format() to build SQL).
-  3. ojt_hours INSERT now always writes logged_at timestamp.
-
-DATABASE: Migrated from SQLite to MySQL via PyMySQL
-"""
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, session, send_from_directory, redirect, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
