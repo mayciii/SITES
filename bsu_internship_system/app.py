@@ -20,7 +20,7 @@ load_dotenv()
 # App Configuration
 # ─────────────────────────────────────────
 app = Flask(__name__, static_folder='static', template_folder='templates')
-app.secret_key = os.environ.get('SECRET_KEY')
+app.secret_key = 'bsu-ojt-secret-2024-lipa'
 
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_DIR = os.path.join(BASE_DIR, 'uploads')
