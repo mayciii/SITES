@@ -10,17 +10,17 @@ FIXES APPLIED:
 
 DATABASE: Migrated from SQLite to MySQL via PyMySQL
 """
-
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify, session, send_from_directory, redirect, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import pymysql, pymysql.cursors, os, datetime, functools
-
+load_dotenv()
 # ─────────────────────────────────────────
 # App Configuration
 # ─────────────────────────────────────────
 app = Flask(__name__, static_folder='static', template_folder='templates')
-app.secret_key = 'bsu-ojt-secret-2024-lipa'
+app.secret_key = os.environ.get('SECRET_KEY')
 
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_DIR = os.path.join(BASE_DIR, 'uploads')
