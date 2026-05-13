@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Application Status — BatStateU-TNEU Lipa SITES</title><link rel="stylesheet" href="/static/css/style.css"/></head><body>
+
+  <nav class="navbar">
+    <button class="ham" id="hamburger"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="nb-brand"><div class="nb-logo"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4a3 3 0 016 0v4"/></svg></div><div><span class="nb-name">BatStateU-TNEU Lipa SITES</span><span class="nb-sub">Lipa Campus</span></div></div>
+    <div class="nb-sp"></div>
+    <div class="nb-user"><div class="nb-ui"><div class="nb-name2" id="navName">—</div><div class="nb-role">Student</div></div><div class="nb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+  </nav>
+  <div class="sb-overlay" id="sbOverlay"></div>
+  <aside class="sidebar closed" id="sidebar">
+    <div class="sb-prof"><div class="sb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="sb-name" id="sbName">—</div><div class="sb-code" id="sbCode">—</div></div></div>
+    <nav class="sb-nav">
+      <div class="sb-section">Main Menu</div>
+      <a href="/dashboard" class=""><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a>
+      <a href="/profile" class=""><span class="ni"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>My Profile</a>
+      <a href="/apply" class=""><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Apply for OJT</a>
+      <a href="/status" class=" on"><span class="ni"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Application Status<span class="nb" id="pb" style="display:none;"></span></a>
+      <a href="/upload" class=""><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>Upload Documents</a>
+      <a href="/my_attendance" class=""><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>My Attendance</a>
+      <div class="sb-section" style="margin-top:1rem;">Account</div>
+      <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>
+    </nav>
+  </aside>
+<main class="main exp" id="mainContent">
+  <div class="ph"><div class="bc"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Application Status</div><h2>My Applications</h2><p>Track the status of all your OJT applications.</p></div>
+  <div class="card">
+    <div class="ch"><h3>All Applications</h3><a href="/apply" class="btn btn-p btn-sm">New Application</a></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>Office</th><th>Category</th><th>Date Applied</th><th>Status</th><th>Remarks</th></tr></thead>
+      <tbody id="appsBody"><tr><td colspan="6" style="text-align:center;color:var(--t4);padding:2rem;">Loading...</td></tr></tbody>
+    </table></div>
+  </div>
+</main>
+<script src="/static/js/api.js"></script><script>
+document.addEventListener('DOMContentLoaded', async () => {
+  
+  const u = Session.requireRole('student'); if (!u) return;
+  initSidebar(); initModals(); initLogout();
+  document.getElementById('navName').textContent = u.full_name;
+  document.getElementById('sbName').textContent = u.full_name;
+  document.getElementById('sbCode').textContent = u.sr_code || 'Student';
+  try {
+    const apps = await API.get('/applications');
+    const tb = document.getElementById('appsBody');
+    tb.innerHTML = apps.length ? apps.map((a,i)=>`<tr><td>${i+1}</td><td class="tn">${a.office_name}</td><td style="font-size:.81rem;color:var(--t3);">${a.category||'University Office'}</td><td>${fmtDate(a.applied_at)}</td><td>${badge(a.status)}</td><td style="font-size:.81rem;color:var(--t3);">${a.remarks||'—'}</td></tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--t4);padding:2rem;">No applications yet. <a href="/apply" style="color:var(--brand);">Apply now</a></td></tr>';
+  } catch(e) { showToast(e.message,'danger'); }
+});
+</script></body></html>

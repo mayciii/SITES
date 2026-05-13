@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Attendance Tracker — BatStateU-TNEU Lipa SITES</title><link rel="stylesheet" href="/static/css/style.css"/></head><body>
+  <nav class="navbar">
+    <button class="ham" id="hamburger"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="nb-brand"><div class="nb-logo"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4a3 3 0 016 0v4"/></svg></div><div><span class="nb-name">BatStateU-TNEU Lipa SITES</span><span class="nb-sub">Lipa Campus</span></div></div>
+    <div class="nb-sp"></div>
+    <div class="nb-user"><div class="nb-ui"><div class="nb-name2" id="navName">—</div><div class="nb-role">Facilitator</div></div><div class="nb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+  </nav>
+  <div class="sb-overlay" id="sbOverlay"></div>
+  <aside class="sidebar closed" id="sidebar">
+    <div class="sb-prof"><div class="sb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="sb-name" id="sbName">—</div><div class="sb-code">OJT Coordinator</div></div></div>
+    <nav class="sb-nav">
+      <div class="sb-section" id="sidebarRoleLabel">Portal</div>
+      <a href="#" id="dashLink"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a>
+      <a href="/attendance" class="on"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Attendance Tracker</a>
+      <div class="sb-section" style="margin-top:1rem;">Account</div>
+      <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>
+    </nav>
+  </aside>
+<main class="main exp" id="mainContent">
+  <div class="ph"><div class="bc"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Attendance Tracker</span></div><h2>OJT Attendance Tracking</h2><p>Log and monitor student attendance for On-the-Job Training.</p></div>
+  <div class="tabs">
+    <button class="tab on" data-t="tDaily">Daily Log</button>
+    <button class="tab" data-t="tSummary">Summary</button>
+    <button class="tab" data-t="tHistory">History</button>
+  </div>
+
+  <!-- DAILY LOG -->
+  <div id="tDaily">
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="ch"><h3>Select Date &amp; Office</h3></div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;">
+        <div class="fg" style="margin:0;flex:0 0 175px;"><label>Date</label><input type="date" id="logDate"/></div>
+        <div class="fg" style="margin:0;flex:1;min-width:190px;"><label>Filter by Office</label><select id="offFilter"><option value="">All Offices</option></select></div>
+        <button class="btn btn-p" id="loadStudents">Load Students</button>
+      </div>
+    </div>
+    <div class="card" id="bulkCard" style="display:none;">
+      <div class="ch">
+        <h3 id="bulkTitle">Student Attendance</h3>
+        <div class="bg">
+          <button class="btn btn-ok btn-sm" id="allPresent">All Present</button>
+          <button class="btn btn-d btn-sm" id="allAbsent">All Absent</button>
+          <button class="btn btn-p btn-sm" id="saveBulk">Save Attendance</button>
+        </div>
+      </div>
+      <div class="br brh"><div>Student</div><div>Office</div><div>Status</div><div>Time In</div><div>Time Out</div><div>Remarks</div></div>
+      <div id="bulkRows"><div style="padding:2rem;text-align:center;color:var(--t4);">No students loaded.</div></div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div id="tSummary" style="display:none;">
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="ch"><h3>Filter</h3></div>
+      <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+        <div class="fg" style="margin:0;"><label>Month</label><input type="month" id="sumMth"/></div>
+        <button class="btn btn-p" id="loadSum">Load Summary</button>
+      </div>
+    </div>
+    <div class="card"><div class="ch"><h3>Student Attendance Summary</h3></div>
+      <div class="tw"><table>
+        <thead><tr><th>Student</th><th>SR Code</th><th>Office</th><th style="color:var(--ok);">Present</th><th style="color:var(--err);">Absent</th><th style="color:var(--warn);">Late</th><th style="color:var(--info);">Half-day</th><th style="color:var(--acc);">Excused</th><th>Days</th><th>Hours</th></tr></thead>
+        <tbody id="sumBody"><tr><td colspan="10" style="text-align:center;color:var(--t4);padding:2rem;">Select a month and click Load Summary.</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div id="tHistory" style="display:none;">
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="ch"><h3>Student History</h3></div>
+      <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+        <div class="fg" style="margin:0;flex:1;min-width:200px;"><label>Student</label><select id="histApp"><option value="">— Select student —</option></select></div>
+        <div class="fg" style="margin:0;"><label>Month</label><input type="month" id="histMth"/></div>
+        <button class="btn btn-p" id="loadHist">Load</button>
+      </div>
+    </div>
+    <div class="asg" id="histSum" style="display:none;">
+      <div class="asb cp"><div class="sn" id="hsp">0</div><div class="sl">Present</div></div>
+      <div class="asb ca"><div class="sn" id="hsa">0</div><div class="sl">Absent</div></div>
+      <div class="asb cl"><div class="sn" id="hsl">0</div><div class="sl">Late</div></div>
+      <div class="asb ch2"><div class="sn" id="hsh">0</div><div class="sl">Half-day</div></div>
+      <div class="asb ce"><div class="sn" id="hse">0</div><div class="sl">Excused</div></div>
+    </div>
+    <div class="card"><div class="ch"><h3 id="histTitle">Attendance History</h3><span id="histHrs" style="font-size:.84rem;font-weight:700;color:var(--brand);"></span></div>
+      <div class="tw"><table>
+        <thead><tr><th>Date</th><th>Status</th><th>Time In</th><th>Time Out</th><th>Hours</th><th>Remarks</th><th>Logged By</th><th></th></tr></thead>
+        <tbody id="histBody"><tr><td colspan="8" style="text-align:center;color:var(--t4);padding:2rem;">Select a student to view history.</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+
+<div class="mo" id="editMo"><div class="md">
+  <div class="mdh"><h3>Edit Attendance</h3><button class="mdx" onclick="closeModal('editMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <input type="hidden" id="editId"/>
+  <div class="fg"><label>Status</label><select id="editSt"><option value="present">Present</option><option value="absent">Absent</option><option value="late">Late</option><option value="half-day">Half-day</option><option value="excused">Excused</option></select></div>
+  <div class="grid2">
+    <div class="fg"><label>Time In</label><input type="time" id="editTi"/></div>
+    <div class="fg"><label>Time Out</label><input type="time" id="editTo"/></div>
+  </div>
+  <div class="fg"><label>Remarks</label><input type="text" id="editRm"/></div>
+  <div class="mdf"><button class="btn btn-g" onclick="closeModal('editMo')">Cancel</button><button class="btn btn-p" id="saveEdit">Save Changes</button></div>
+</div></div>
+
+<script src="/static/js/api.js"></script><script>
+const AB = s=>`<span class="att-${s.replace('-','_').replace(' ','-')}">${s}</span>`;
+let apps=[], existAtt={}, curHistApp=null;
+
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  ['tDaily','tSummary','tHistory'].forEach(id=>document.getElementById(id).style.display=id===b.dataset.t?'':'none');
+}));
+
+document.addEventListener('DOMContentLoaded',async()=>{
+  const u=Session.requireRole('facilitator','admin'); if(!u) return;
+  initSidebar(); initModals(); initLogout();
+  document.getElementById('navName').textContent=u.full_name;
+  document.getElementById('sbName').textContent=u.full_name;
+  // Set dashboard link and sidebar label based on role
+  const dashHref = u.role === 'admin' ? '/admin_dashboard' : '/facilitator_dashboard';
+  document.getElementById('dashLink').href = dashHref;
+  document.getElementById('sidebarRoleLabel').textContent = u.role === 'admin' ? 'Admin' : 'Facilitator';
+  document.getElementById('logDate').value=new Date().toISOString().split('T')[0];
+  const today=new Date().toISOString().split('T')[0].substring(0,7);
+  document.getElementById('sumMth').value=today;
+  document.getElementById('histMth').value=today;
+  try{
+    const [aps,offices]=await Promise.all([API.get('/applications'),API.get('/offices')]);
+    apps=aps.filter(a=>['approved','ongoing','completed'].includes(a.status));
+    const ofs=document.getElementById('offFilter');
+    [...new Map(apps.map(a=>[a.office_id,a.office_name])).entries()].forEach(([id,nm])=>ofs.innerHTML+=`<option value="${id}">${nm}</option>`);
+    const hs=document.getElementById('histApp');
+    apps.forEach(a=>hs.innerHTML+=`<option value="${a.id}">${a.student_name||'—'} (${a.sr_code||'—'}) — ${a.office_name}</option>`);
+  }catch(e){showToast(e.message,'danger');}
+  document.getElementById('loadStudents').addEventListener('click',loadBulk);
+  document.getElementById('allPresent').addEventListener('click',()=>document.querySelectorAll('.ssel').forEach(s=>s.value='present'));
+  document.getElementById('allAbsent').addEventListener('click',()=>document.querySelectorAll('.ssel').forEach(s=>s.value='absent'));
+  document.getElementById('saveBulk').addEventListener('click',saveBulk);
+  document.getElementById('loadSum').addEventListener('click',loadSummary);
+  document.getElementById('loadHist').addEventListener('click',loadHistory);
+  document.getElementById('saveEdit').addEventListener('click',saveEdit);
+});
+
+async function loadBulk(){
+  const dt=document.getElementById('logDate').value, oid=document.getElementById('offFilter').value;
+  if(!dt){showToast('Please select a date.','warn');return;}
+  let filt=apps; if(oid)filt=filt.filter(a=>String(a.office_id)===oid);
+  if(!filt.length){showToast('No students found.','warn');return;}
+  try{const r=await API.get('/attendance?date='+dt);existAtt={};r.records.forEach(x=>existAtt[x.application_id]=x);}catch{}
+  const card=document.getElementById('bulkCard');card.style.display='';
+  document.getElementById('bulkTitle').textContent='Attendance — '+new Date(dt+'T00:00:00').toLocaleDateString('en-PH',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('bulkRows').innerHTML=filt.map(a=>{
+    const ex=existAtt[a.id]||{},st=ex.status||'present';
+    return `<div class="br" data-aid="${a.id}" data-sid="${a.student_id}"><div><strong>${a.student_name}</strong><div class="ts">${a.sr_code||''}</div></div><div style="font-size:.81rem;">${a.office_name}</div><div><select class="ssel" style="width:100%;padding:.3rem;border:1.5px solid var(--line);border-radius:var(--r1);font-size:.8rem;"><option value="present" ${st==='present'?'selected':''}>Present</option><option value="absent" ${st==='absent'?'selected':''}>Absent</option><option value="late" ${st==='late'?'selected':''}>Late</option><option value="half-day" ${st==='half-day'?'selected':''}>Half-day</option><option value="excused" ${st==='excused'?'selected':''}>Excused</option></select></div><div><input type="time" class="ti" value="${ex.time_in||'08:00'}" style="width:100%;padding:.3rem;border:1.5px solid var(--line);border-radius:var(--r1);font-size:.8rem;"/></div><div><input type="time" class="to" value="${ex.time_out||'17:00'}" style="width:100%;padding:.3rem;border:1.5px solid var(--line);border-radius:var(--r1);font-size:.8rem;"/></div><div><input type="text" class="rm" placeholder="optional" value="${ex.remarks||''}" style="width:100%;padding:.3rem;border:1.5px solid var(--line);border-radius:var(--r1);font-size:.8rem;"/></div></div>`;
+  }).join('');
+}
+
+async function saveBulk(){
+  const dt=document.getElementById('logDate').value;
+  const rows=document.querySelectorAll('#bulkRows .br');if(!rows.length)return;
+  const payload=[...rows].map(r=>({application_id:parseInt(r.dataset.aid),student_id:parseInt(r.dataset.sid),date:dt,status:r.querySelector('.ssel').value,time_in:r.querySelector('.ti').value,time_out:r.querySelector('.to').value,remarks:r.querySelector('.rm').value}));
+  const btn=document.getElementById('saveBulk');btn.disabled=true;btn.textContent='Saving...';
+  try{await API.post('/attendance',payload);showToast('Attendance saved for '+payload.length+' student(s)!','ok');await loadBulk();}
+  catch(e){showToast(e.message,'danger');}
+  btn.disabled=false;btn.textContent='Save Attendance';
+}
+
+async function loadSummary(){
+  const mth=document.getElementById('sumMth').value,btn=document.getElementById('loadSum');
+  btn.disabled=true;btn.textContent='Loading...';
+  try{
+    const data=await API.get('/attendance/summary'+(mth?'?month='+mth:''));
+    document.getElementById('sumBody').innerHTML=data.length?data.map(s=>`<tr><td class="tn">${s.student_name}<div class="ts">${s.dept_name||''}</div></td><td style="font-size:.8rem;">${s.sr_code||'—'}</td><td style="font-size:.8rem;">${s.office_name}</td><td style="text-align:center;color:var(--ok);font-weight:700;">${s.present||0}</td><td style="text-align:center;color:var(--err);font-weight:700;">${s.absent||0}</td><td style="text-align:center;color:var(--warn);font-weight:700;">${s.late||0}</td><td style="text-align:center;color:var(--info);font-weight:700;">${s.half_day||0}</td><td style="text-align:center;color:var(--acc);font-weight:700;">${s.excused||0}</td><td style="text-align:center;font-weight:600;">${s.total_days||0}</td><td style="text-align:center;font-weight:600;color:var(--brand);">${parseFloat(s.total_hours||0).toFixed(1)}h</td></tr>`).join(''):'<tr><td colspan="10" style="text-align:center;color:var(--t4);padding:2rem;">No attendance data found.</td></tr>';
+  }catch(e){showToast(e.message,'danger');}
+  btn.disabled=false;btn.textContent='Load Summary';
+}
+
+async function loadHistory(){
+  const aid=document.getElementById('histApp').value,mth=document.getElementById('histMth').value;
+  if(!aid){showToast('Please select a student.','warn');return;}
+  curHistApp=aid;
+  const btn=document.getElementById('loadHist');btn.disabled=true;btn.textContent='Loading...';
+  try{
+    let url='/attendance?application_id='+aid; if(mth)url+='&month='+mth;
+    const data=await API.get(url),rec=data.records,sm=data.summary||{};
+    document.getElementById('histSum').style.display='';
+    ['hsp','hsa','hsl','hsh','hse'].forEach((id,i)=>document.getElementById(id).textContent=[sm.present,sm.absent,sm.late,sm.half_day,sm.excused][i]||0);
+    const a=apps.find(x=>String(x.id)===aid);
+    document.getElementById('histTitle').textContent=a?(a.student_name+' — History'):'Attendance History';
+    document.getElementById('histHrs').textContent='Total: '+parseFloat(sm.total_hours||0).toFixed(1)+' hrs';
+    document.getElementById('histBody').innerHTML=rec.length?rec.map(r=>`<tr><td>${fmtDate(r.date)}</td><td>${AB(r.status)}</td><td>${r.time_in||'—'}</td><td>${r.time_out||'—'}</td><td style="font-weight:700;">${r.hours_rendered?r.hours_rendered+'h':'—'}</td><td style="font-size:.81rem;">${r.remarks||'—'}</td><td style="font-size:.78rem;color:var(--t3);">${r.logged_by_name||'—'}</td><td><button class="btn btn-g btn-xs" onclick="openEdit(${r.id},'${r.status}','${r.time_in||''}','${r.time_out||''}','${r.remarks||''}')">Edit</button></td></tr>`).join(''):'<tr><td colspan="8" style="text-align:center;color:var(--t4);padding:2rem;">No records found.</td></tr>';
+  }catch(e){showToast(e.message,'danger');}
+  btn.disabled=false;btn.textContent='Load';
+}
+
+function openEdit(id,st,ti,to,rm){document.getElementById('editId').value=id;document.getElementById('editSt').value=st;document.getElementById('editTi').value=ti;document.getElementById('editTo').value=to;document.getElementById('editRm').value=rm;openModal('editMo');}
+async function saveEdit(){
+  const id=document.getElementById('editId').value,btn=document.getElementById('saveEdit');
+  btn.disabled=true;btn.textContent='Saving...';
+  try{await API.put('/attendance/'+id,{status:document.getElementById('editSt').value,time_in:document.getElementById('editTi').value,time_out:document.getElementById('editTo').value,remarks:document.getElementById('editRm').value});closeModal('editMo');showToast('Updated!','ok');if(curHistApp)await loadHistory();}
+  catch(e){showToast(e.message,'danger');}
+  btn.disabled=false;btn.textContent='Save Changes';
+}
+</script></body></html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>My Attendance — BatStateU-TNEU Lipa SITES</title><link rel="stylesheet" href="/static/css/style.css"/></head><body>
+  <nav class="navbar">
+    <button class="ham" id="hamburger"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="nb-brand"><div class="nb-logo"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4a3 3 0 016 0v4"/></svg></div><div><span class="nb-name">BatStateU-TNEU Lipa SITES</span><span class="nb-sub">Lipa Campus</span></div></div>
+    <div class="nb-sp"></div>
+    <div class="nb-user"><div class="nb-ui"><div class="nb-name2" id="navName">—</div><div class="nb-role">Student</div></div><div class="nb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+  </nav>
+  <div class="sb-overlay" id="sbOverlay"></div>
+  <aside class="sidebar closed" id="sidebar">
+    <div class="sb-prof"><div class="sb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="sb-name" id="sbName">—</div><div class="sb-code" id="sbCode">—</div></div></div>
+    <nav class="sb-nav">
+      <div class="sb-section">Main Menu</div>
+      <a href="/dashboard"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a>
+      <a href="/profile"><span class="ni"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>My Profile</a>
+      <a href="/apply"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Apply for OJT</a>
+      <a href="/status"><span class="ni"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Application Status</a>
+      <a href="/upload"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>Upload Documents</a>
+      <a href="/my_attendance" class="on"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>My Attendance</a>
+      <div class="sb-section" style="margin-top:1rem;">Account</div>
+      <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>
+    </nav>
+  </aside>
+<main class="main exp" id="mainContent">
+  <div class="ph"><div class="bc"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>My Attendance</span></div><h2>My Attendance</h2><p>View your daily OJT attendance records and hours progress.</p></div>
+  <div class="card" style="margin-bottom:1.5rem;">
+    <div class="ch"><h3>Filter Records</h3></div>
+    <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap;">
+      <div class="fg" style="margin:0;"><label>Month</label><input type="month" id="mth"/></div>
+      <button class="btn btn-p" id="loadBtn">Load Records</button>
+    </div>
+  </div>
+  <div class="asg" id="sumGrid" style="display:none;">
+    <div class="asb cp"><div class="sn" id="sp">0</div><div class="sl">Present</div></div>
+    <div class="asb ca"><div class="sn" id="sa">0</div><div class="sl">Absent</div></div>
+    <div class="asb cl"><div class="sn" id="sl">0</div><div class="sl">Late</div></div>
+    <div class="asb ch2"><div class="sn" id="sh">0</div><div class="sl">Half-day</div></div>
+    <div class="asb ce"><div class="sn" id="se">0</div><div class="sl">Excused</div></div>
+  </div>
+  <div class="card" id="hCard" style="display:none;margin-bottom:1.5rem;">
+    <div class="ch"><h3>OJT Hours Progress</h3><span style="font-size:.875rem;font-weight:700;color:var(--brand);" id="hLbl">0 / 486</span></div>
+    <div class="pb"><div class="pf" id="hBar" style="width:0%"></div></div>
+  </div>
+  <div class="card">
+    <div class="ch"><h3>Attendance Records</h3></div>
+    <div class="tw"><table>
+      <thead><tr><th>Date</th><th>Office</th><th>Status</th><th>Time In</th><th>Time Out</th><th>Hours</th><th>Remarks</th></tr></thead>
+      <tbody id="aBody"><tr><td colspan="7" style="text-align:center;color:var(--t4);padding:2rem;">Select a month and click Load Records.</td></tr></tbody>
+    </table></div>
+  </div>
+</main>
+<script src="/static/js/api.js"></script><script>
+const AB = s => `<span class="att-${s.replace('-','_').replace(' ','-')}">${s}</span>`;
+document.addEventListener('DOMContentLoaded', async () => {
+  const u = Session.requireRole('student'); if(!u) return;
+  initSidebar(); initLogout();
+  document.getElementById('navName').textContent=u.full_name;
+  document.getElementById('sbName').textContent=u.full_name;
+  document.getElementById('sbCode').textContent=u.sr_code||'Student';
+  document.getElementById('mth').value=new Date().toISOString().substring(0,7);
+  document.getElementById('loadBtn').addEventListener('click', load);
+  await load();
+});
+async function load() {
+  const mth=document.getElementById('mth').value;
+  try {
+    const apps=await API.get('/applications');
+    const act=apps.find(a=>['approved','ongoing','completed'].includes(a.status));
+    let url='/attendance'; const p=[];
+    if(act) p.push('application_id='+act.id);
+    if(mth) p.push('month='+mth);
+    if(p.length) url+='?'+p.join('&');
+    const data=await API.get(url),rec=data.records,sm=data.summary||{};
+    document.getElementById('sumGrid').style.display='';
+    document.getElementById('sp').textContent=sm.present||0;
+    document.getElementById('sa').textContent=sm.absent||0;
+    document.getElementById('sl').textContent=sm.late||0;
+    document.getElementById('sh').textContent=sm.half_day||0;
+    document.getElementById('se').textContent=sm.excused||0;
+    const h=parseFloat(sm.total_hours||0),pct=Math.min(100,Math.round(h/486*100));
+    document.getElementById('hCard').style.display='';
+    document.getElementById('hLbl').textContent=h.toFixed(1)+' / 486 hrs';
+    document.getElementById('hBar').style.width=pct+'%';
+    document.getElementById('aBody').innerHTML=rec.length?rec.map(r=>`<tr><td>${fmtDate(r.date)}</td><td style="font-size:.81rem;">${r.office_name||'—'}</td><td>${AB(r.status)}</td><td>${r.time_in||'—'}</td><td>${r.time_out||'—'}</td><td style="font-weight:700;">${r.hours_rendered?r.hours_rendered+'h':'—'}</td><td style="font-size:.81rem;">${r.remarks||'—'}</td></tr>`).join(''):'<tr><td colspan="7" style="text-align:center;color:var(--t4);padding:2rem;">No records for this period.</td></tr>';
+  } catch(e) { showToast(e.message,'danger'); }
+}
+</script></body></html>

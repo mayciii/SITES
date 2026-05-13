@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin Panel — BatStateU-TNEU Lipa SITES</title>
+<link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <button class="ham hide-desktop" id="hamburger"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="nb-brand"><div class="nb-logo"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4a3 3 0 016 0v4"/></svg></div><div><span class="nb-name">BatStateU-TNEU Lipa SITES</span><span class="nb-sub">Administrator</span></div></div>
+    <div class="nb-sp"></div>
+    <div class="nb-user"><div class="nb-ui"><div class="nb-name2" id="navName">Admin</div><div class="nb-role">Admin</div></div><div class="nb-av"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div></div>
+  </nav>
+  <div class="sb-overlay" id="sbOverlay"></div>
+  <aside class="sidebar permanent" id="sidebar">
+    <div class="sb-prof"><div class="sb-av"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="sb-name" id="sbName">System Admin</div><div class="sb-code">Administrator</div></div></div>
+    <nav class="sb-nav">
+      <div class="sb-section">Admin Panel</div>
+      <a href="#" onclick="showSec('sDash')" id="navDash" class="on"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Overview</a>
+      <a href="#" onclick="showSec('sUsers')" id="navUsers"><span class="ni"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>Manage Users<span class="nb" id="regBadge" style="display:none;"></span></a>
+      <a href="#" onclick="showSec('sDepts')" id="navDepts"><span class="ni"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><rect x="2" y="4" width="20" height="17" rx="2"/></svg></span>Departments</a>
+      <a href="#" onclick="showSec('sOffices')" id="navOffices"><span class="ni"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></span>Partner Offices</a>
+      <a href="#" onclick="showSec('sApps')" id="navApps"><span class="ni"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Applications<span class="nb" id="appBadge" style="display:none;"></span></a>
+      <a href="/attendance"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Attendance</a>
+      <div class="sb-section" style="margin-top:1rem;">Account</div>
+      <a href="/profile"><span class="ni"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>My Profile</a>
+      <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>
+    </nav>
+  </aside>
+
+<main class="main sb-permanent" id="mainContent">
+
+  <!-- Campus Hero Banner -->
+  <div class="campus-hero">
+    <img src="/static/img/bsu-lipa.jpg" alt="BSU Lipa" onerror="this.style.display='none'"/>
+    <div class="campus-hero-overlay">
+      <div>
+        <div class="campus-hero-kicker">Batangas State University — Lipa Campus</div>
+        <h2>Admin Dashboard</h2>
+        <p>System overview and management controls.</p>
+      </div>
+      <a href="#" onclick="showSec('sUsers')" class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);flex-shrink:0;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Manage Users
+      </a>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="sDash">
+    <div class="sg">
+      <div class="sc blu"><div class="si b"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="sn" id="tS">—</div><div class="sl">Total Students</div></div></div>
+      <div class="sc red"><div class="si r"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="sn" id="tF">—</div><div class="sl">Facilitators</div></div></div>
+      <div class="sc grn"><div class="si g"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div><div><div class="sn" id="tO">—</div><div class="sl">Partner Offices</div></div></div>
+      <div class="sc org"><div class="si o"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="sn" id="tP">—</div><div class="sl">Pending Applications</div></div></div>
+      <div class="sc grn"><div class="si g"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div><div class="sn" id="tA">—</div><div class="sl">Approved</div></div></div>
+      <div class="sc blu"><div class="si b"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div><div class="sn" id="tOng">—</div><div class="sl">Ongoing</div></div></div>
+      <div class="sc red"><div class="si v"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="sn" id="tD">—</div><div class="sl">Docs Pending</div></div></div>
+      <div class="sc grn"><div class="si g"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div><div class="sn" id="tC">—</div><div class="sl">Completed</div></div></div>
+    </div>
+  </div>
+
+  <!-- USERS -->
+  <div id="sUsers" style="display:none;">
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="ch">
+        <h3>Pending Registrations</h3>
+        <span class="bx bx-pending" id="regCount">0 pending</span>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>Full Name</th><th>Email</th><th>Role</th><th>Registered</th><th>Actions</th></tr></thead>
+        <tbody id="pendReg"><tr><td colspan="5" style="text-align:center;color:var(--t4);padding:1.5rem;">Loading...</td></tr></tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <h3>All Users</h3>
+        <div style="display:flex;gap:.65rem;flex-wrap:wrap;">
+          <div class="sb"><span class="sb-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input type="text" id="uSrch" oninput="initSearch('uSrch','uBody')()" placeholder="Search users..."/></div>
+          <button class="btn btn-p btn-sm" onclick="openModal('addUserMo')">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add User
+          </button>
+        </div>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>#</th><th>Name</th><th>SR / ID</th><th>Email</th><th>Role</th><th>College</th><th>Status</th><th></th></tr></thead>
+        <tbody id="uBody"><tr><td colspan="8" style="text-align:center;color:var(--t4);padding:2rem;">Loading...</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- DEPARTMENTS -->
+  <div id="sDepts" style="display:none;">
+    <div class="two">
+      <div class="card">
+        <div class="ch"><h3>Colleges / Departments</h3><button class="btn btn-p btn-sm" onclick="openModal('addDeptMo')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add</button></div>
+        <div class="tw"><table><thead><tr><th>Code</th><th>Name</th><th></th></tr></thead><tbody id="dBody"></tbody></table></div>
+      </div>
+      <div class="card">
+        <div class="ch"><h3>Programs</h3><button class="btn btn-p btn-sm" onclick="openModal('addProgMo')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add</button></div>
+        <div class="tw"><table><thead><tr><th>Code</th><th>Program</th><th>Hrs</th><th></th></tr></thead><tbody id="pBody"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFFICES -->
+  <div id="sOffices" style="display:none;">
+    <div class="card">
+      <div class="ch"><h3>Partner Offices</h3><button class="btn btn-p btn-sm" onclick="openModal('addOfficeMo')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Office</button></div>
+      <div class="tw"><table>
+        <thead><tr><th>Name</th><th>Category</th><th>Slots</th><th>Status</th><th></th></tr></thead>
+        <tbody id="oBody"><tr><td colspan="5" style="text-align:center;color:var(--t4);padding:2rem;">Loading...</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- APPLICATIONS -->
+  <div id="sApps" style="display:none;">
+    <div class="card">
+      <div class="ch"><h3>All Applications</h3><span class="bx bx-pending" id="appCount">Loading...</span></div>
+      <div class="tw"><table>
+        <thead><tr><th>#</th><th>Student</th><th>SR Code</th><th>Office</th><th>College</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="aBody"><tr><td colspan="8" style="text-align:center;color:var(--t4);padding:2rem;">Loading...</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODALS -->
+<div class="mo" id="addUserMo"><div class="md md-lg">
+  <div class="mdh"><h3>Add New User</h3><button class="mdx" onclick="closeModal('addUserMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div class="grid2">
+    <div class="fg"><label>Full Name</label><input type="text" id="auName" placeholder="Full Name"/></div>
+    <div class="fg"><label>Email</label><input type="email" id="auEmail" placeholder="email@batstate-u.edu.ph"/></div>
+  </div>
+  <div class="grid2">
+    <div class="fg"><label>Password</label><input type="password" id="auPw" placeholder="Min. 8 chars"/></div>
+    <div class="fg"><label>Role</label><select id="auRole"><option value="student">Student</option><option value="facilitator">Facilitator</option><option value="admin">Admin</option></select></div>
+  </div>
+  <div class="grid2">
+    <div class="fg"><label>SR / Employee Code</label><input type="text" id="auSr" placeholder="e.g. 24-36106"/></div>
+    <div class="fg"><label>Department</label><select id="auDept"><option value="">— None —</option></select></div>
+  </div>
+  <div class="mdf"><button class="btn btn-g" onclick="closeModal('addUserMo')">Cancel</button><button class="btn btn-p" id="addUserBtn" onclick="addUser()">Create User</button></div>
+</div></div>
+
+<div class="mo" id="editUserMo"><div class="md md-lg">
+  <div class="mdh"><h3>Edit User</h3><button class="mdx" onclick="closeModal('editUserMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <input type="hidden" id="euId"/>
+  <div class="grid2">
+    <div class="fg"><label>Full Name</label><input type="text" id="euName"/></div>
+    <div class="fg"><label>Email</label><input type="email" id="euEmail"/></div>
+  </div>
+  <div class="grid2">
+    <div class="fg"><label>Role</label><select id="euRole"><option value="student">Student</option><option value="facilitator">Facilitator</option><option value="admin">Admin</option></select></div>
+    <div class="fg"><label>Status</label><select id="euStatus"><option value="active">Active</option><option value="inactive">Inactive</option><option value="suspended">Suspended</option></select></div>
+  </div>
+  <div class="fg"><label>SR / Employee Code</label><input type="text" id="euSr"/></div>
+  <div class="fg"><label>New Password (leave blank to keep)</label><input type="password" id="euPw" placeholder="Leave blank to keep current"/></div>
+  <div class="mdf"><button class="btn btn-g" onclick="closeModal('editUserMo')">Cancel</button><button class="btn btn-p" onclick="saveUser()">Save Changes</button></div>
+</div></div>
+
+<div class="mo" id="addDeptMo"><div class="md">
+  <div class="mdh"><h3>Add Department</h3><button class="mdx" onclick="closeModal('addDeptMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div class="fg"><label>Code (e.g. CICS)</label><input type="text" id="dCode" placeholder="Dept code"/></div>
+  <div class="fg"><label>Full Name</label><input type="text" id="dName" placeholder="College / Department name"/></div>
+  <div class="mdf"><button class="btn btn-g" onclick="closeModal('addDeptMo')">Cancel</button><button class="btn btn-p" onclick="addDept()">Add Department</button></div>
+</div></div>
+
+<div class="mo" id="addProgMo"><div class="md">
+  <div class="mdh"><h3>Add Program</h3><button class="mdx" onclick="closeModal('addProgMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div class="fg"><label>Department</label><select id="pDept"><option value="">Select dept...</option></select></div>
+  <div class="fg"><label>Code</label><input type="text" id="pCode" placeholder="e.g. BSIT-BA"/></div>
+  <div class="fg"><label>Program Name</label><input type="text" id="pName" placeholder="Full program name"/></div>
+  <div class="fg"><label>Required Hours</label><input type="number" id="pHrs" value="486" min="100"/></div>
+  <div class="mdf"><button class="btn btn-g" onclick="closeModal('addProgMo')">Cancel</button><button class="btn btn-p" onclick="addProg()">Add Program</button></div>
+</div></div>
+
+<div class="mo" id="addOfficeMo"><div class="md">
+  <div class="mdh"><h3>Add Office</h3><button class="mdx" onclick="closeModal('addOfficeMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div class="fg"><label>Office Name</label><input type="text" id="oName" placeholder="e.g. ICT Services"/></div>
+  <div class="fg"><label>Description</label><textarea id="oDesc" rows="3" placeholder="Brief description..."></textarea></div>
+  <div class="grid2">
+    <div class="fg"><label>Category</label><input type="text" id="oCat" value="University Office"/></div>
+    <div class="fg"><label>Slots</label><input type="number" id="oSlots" value="5" min="0"/></div>
+  </div>
+  <div class="mdf"><button class="btn btn-g" onclick="closeModal('addOfficeMo')">Cancel</button><button class="btn btn-p" onclick="addOffice()">Add Office</button></div>
+</div></div>
+
+<div class="mo" id="editOfficeMo"><div class="md">
+  <div class="mdh"><h3>Edit Office</h3><button class="mdx" onclick="closeModal('editOfficeMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <input type="hidden" id="eoId"/>
+  <div class="fg"><label>Office Name</label><input type="text" id="eoName"/></div>
+  <div class="fg"><label>Description</label><textarea id="eoDesc" rows="3"></textarea></div>
+  <div class="grid2">
+    <div class="fg"><label>Category</label><input type="text" id="eoCat"/></div>
+    <div class="fg"><label>Slots</label><input type="number" id="eoSlots" min="0"/></div>
+  </div>
+  <div class="fg"><label>Status</label><select id="eoActive"><option value="1">Active</option><option value="0">Inactive</option></select></div>
+  <div class="mdf"><button class="btn btn-g" onclick="closeModal('editOfficeMo')">Cancel</button><button class="btn btn-p" onclick="saveOffice()">Save Changes</button></div>
+</div></div>
+
+<div class="mo" id="updAppMo"><div class="md">
+  <div class="mdh"><h3>Update Application</h3><button class="mdx" onclick="closeModal('updAppMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <input type="hidden" id="updAppId"/>
+  <div class="fg"><label>Status</label><select id="updStatus"><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="ongoing">Ongoing</option><option value="completed">Completed</option></select></div>
+  <div class="fg"><label>Remarks</label><textarea id="updRemarks" rows="3"></textarea></div>
+  <div class="mdf"><button class="btn btn-g" onclick="closeModal('updAppMo')">Cancel</button><button class="btn btn-p" onclick="saveApp()">Update Application</button></div>
+</div></div>
+
+<script src="/static/js/api.js"></script>
+<script>
+let depts=[], allUsers=[];
+
+function showSec(id) {
+  ['sDash','sUsers','sDepts','sOffices','sApps'].forEach(s => document.getElementById(s).style.display = s===id?'':'none');
+  // update sidebar active
+  const map = {sDash:'navDash',sUsers:'navUsers',sDepts:'navDepts',sOffices:'navOffices',sApps:'navApps'};
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('on'));
+  const nav = document.getElementById(map[id]);
+  if(nav) nav.classList.add('on');
+  // lazy load sections
+  if(id==='sUsers') loadUsers();
+  if(id==='sDepts') { loadDepts(); loadProgs(); }
+  if(id==='sOffices') loadOffices();
+  if(id==='sApps') loadApps();
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const u = Session.requireRole('admin'); if(!u) return;
+  initSidebar(); initModals(); initLogout();
+  document.getElementById('navName').textContent = u.full_name;
+  document.getElementById('sbName').textContent  = u.full_name;
+  try {
+    const [st, dps] = await Promise.all([API.get('/stats'), API.get('/departments')]);
+    document.getElementById('tS').textContent = st.total_students;
+    document.getElementById('tF').textContent = st.total_facilitators;
+    document.getElementById('tO').textContent = st.total_offices;
+    document.getElementById('tP').textContent = st.pending_apps;
+    document.getElementById('tA').textContent = st.approved_apps;
+    document.getElementById('tOng').textContent = st.ongoing_apps;
+    document.getElementById('tC').textContent = st.completed_apps;
+    document.getElementById('tD').textContent = st.docs_pending;
+    if(st.pending_apps>0){ document.getElementById('appBadge').textContent=st.pending_apps; document.getElementById('appBadge').style.display=''; }
+    depts = dps;
+    const sel = document.getElementById('auDept');
+    depts.forEach(d => sel.innerHTML += `<option value="${d.id}">${d.code} — ${d.name}</option>`);
+  } catch(e) { showToast(e.message,'danger'); }
+});
+
+// USERS
+async function loadUsers() {
+  try {
+    allUsers = await API.get('/users');
+    const pending = allUsers.filter(u=>u.status==='inactive' && u.role!=='admin');
+    document.getElementById('regCount').textContent = pending.length + ' pending';
+    if(pending.length>0){document.getElementById('regBadge').textContent=pending.length;document.getElementById('regBadge').style.display='';}
+    document.getElementById('pendReg').innerHTML = pending.length
+      ? pending.map(u=>`<tr><td class="tn">${u.full_name}</td><td style="font-size:.81rem;">${u.email}</td><td>${badge(u.role)}</td><td>${fmtDate(u.created_at)}</td><td><div class="bg"><button class="btn btn-ok btn-xs" onclick="setStatus(${u.id},'active')">Approve</button><button class="btn btn-d btn-xs" onclick="setStatus(${u.id},'suspended')">Reject</button></div></td></tr>`).join('')
+      : `<tr><td colspan="5" style="text-align:center;color:var(--t4);padding:1.5rem;">No pending registrations.</td></tr>`;
+    document.getElementById('uBody').innerHTML = allUsers.map((u,i)=>`<tr><td>${i+1}</td><td class="tn">${u.full_name}<div class="ts">${u.email}</div></td><td style="font-size:.8rem;">${u.sr_code||'—'}</td><td style="font-size:.8rem;">${u.email}</td><td>${badge(u.role)}</td><td style="font-size:.8rem;">${u.dept_name||'—'}</td><td>${badge(u.status)}</td><td><div class="bg"><button class="btn btn-g btn-xs" onclick="openEditUser(${u.id})">Edit</button><button class="btn btn-d btn-xs" onclick="delUser(${u.id})">Del</button></div></td></tr>`).join('');
+  } catch(e) { showToast(e.message,'danger'); }
+}
+async function setStatus(id,status){try{await API.put('/users/'+id,{status});showToast('User '+status,'ok');loadUsers();}catch(e){showToast(e.message,'danger');}}
+async function delUser(id){if(!confirm('Deactivate this user?'))return;try{await API.delete('/users/'+id);showToast('Deactivated','ok');loadUsers();}catch(e){showToast(e.message,'danger');}}
+function openEditUser(id){const u=allUsers.find(x=>x.id===id);if(!u)return;document.getElementById('euId').value=u.id;document.getElementById('euName').value=u.full_name;document.getElementById('euEmail').value=u.email;document.getElementById('euRole').value=u.role;document.getElementById('euStatus').value=u.status;document.getElementById('euSr').value=u.sr_code||'';document.getElementById('euPw').value='';openModal('editUserMo');}
+async function addUser(){const btn=document.getElementById('addUserBtn');btn.disabled=true;btn.textContent='Creating...';try{await API.post('/users',{full_name:document.getElementById('auName').value,email:document.getElementById('auEmail').value,password:document.getElementById('auPw').value,role:document.getElementById('auRole').value,sr_code:document.getElementById('auSr').value,dept_id:document.getElementById('auDept').value||null});showToast('User created','ok');closeModal('addUserMo');loadUsers();}catch(e){showToast(e.message,'danger');}btn.disabled=false;btn.textContent='Create User';}
+async function saveUser(){try{const d={full_name:document.getElementById('euName').value,email:document.getElementById('euEmail').value,role:document.getElementById('euRole').value,sr_code:document.getElementById('euSr').value,status:document.getElementById('euStatus').value};const pw=document.getElementById('euPw').value;if(pw)d.password=pw;await API.put('/users/'+document.getElementById('euId').value,d);showToast('User updated','ok');closeModal('editUserMo');loadUsers();}catch(e){showToast(e.message,'danger');}}
+
+// DEPARTMENTS
+async function loadDepts(){try{const d=await API.get('/departments');document.getElementById('dBody').innerHTML=d.map(x=>`<tr><td class="tn">${x.code}</td><td>${x.name}</td><td><button class="btn btn-d btn-xs" onclick="delDept(${x.id})">Del</button></td></tr>`).join('');}catch(e){showToast(e.message,'danger');}}
+async function loadProgs(){try{const p=await API.get('/programs');document.getElementById('pBody').innerHTML=p.map(x=>`<tr><td class="tn">${x.code}</td><td style="font-size:.8rem;">${x.name}</td><td>${x.required_hours}</td><td><button class="btn btn-d btn-xs" onclick="delProg(${x.id})">Del</button></td></tr>`).join('');const ps=document.getElementById('pDept');depts.forEach(d=>ps.innerHTML+=`<option value="${d.id}">${d.code}</option>`);}catch(e){}}
+async function addDept(){try{await API.post('/departments',{code:document.getElementById('dCode').value,name:document.getElementById('dName').value});showToast('Added','ok');closeModal('addDeptMo');loadDepts();}catch(e){showToast(e.message,'danger');}}
+async function delDept(id){if(!confirm('Delete?'))return;try{await API.delete('/departments/'+id);showToast('Deleted','ok');loadDepts();}catch(e){showToast(e.message,'danger');}}
+async function addProg(){try{await API.post('/programs',{dept_id:document.getElementById('pDept').value,code:document.getElementById('pCode').value,name:document.getElementById('pName').value,required_hours:parseInt(document.getElementById('pHrs').value)||486});showToast('Added','ok');closeModal('addProgMo');loadProgs();}catch(e){showToast(e.message,'danger');}}
+async function delProg(id){if(!confirm('Delete?'))return;try{await API.delete('/programs/'+id);showToast('Deleted','ok');loadProgs();}catch(e){showToast(e.message,'danger');}}
+
+// OFFICES
+async function loadOffices(){try{const o=await API.get('/offices');document.getElementById('oBody').innerHTML=o.map(x=>`<tr><td class="tn">${x.name}</td><td style="font-size:.8rem;">${x.category}</td><td>${x.slots}</td><td>${badge(x.is_active?'active':'inactive')}</td><td><div class="bg"><button class="btn btn-g btn-xs" onclick="openEditOffice(${x.id},'${x.name.replace(/'/g,"\\'")}','${(x.description||'').replace(/'/g,"\\'")}','${x.category}',${x.slots},${x.is_active})">Edit</button><button class="btn btn-d btn-xs" onclick="delOffice(${x.id})">Del</button></div></td></tr>`).join('');}catch(e){showToast(e.message,'danger');}}
+function openEditOffice(id,n,d,c,s,a){document.getElementById('eoId').value=id;document.getElementById('eoName').value=n;document.getElementById('eoDesc').value=d;document.getElementById('eoCat').value=c;document.getElementById('eoSlots').value=s;document.getElementById('eoActive').value=a;openModal('editOfficeMo');}
+async function addOffice(){try{await API.post('/offices',{name:document.getElementById('oName').value,description:document.getElementById('oDesc').value,category:document.getElementById('oCat').value,slots:parseInt(document.getElementById('oSlots').value)||5});showToast('Added','ok');closeModal('addOfficeMo');loadOffices();}catch(e){showToast(e.message,'danger');}}
+async function saveOffice(){try{await API.put('/offices/'+document.getElementById('eoId').value,{name:document.getElementById('eoName').value,description:document.getElementById('eoDesc').value,category:document.getElementById('eoCat').value,slots:parseInt(document.getElementById('eoSlots').value)||5,is_active:parseInt(document.getElementById('eoActive').value)});showToast('Updated','ok');closeModal('editOfficeMo');loadOffices();}catch(e){showToast(e.message,'danger');}}
+async function delOffice(id){if(!confirm('Deactivate this office?'))return;try{await API.delete('/offices/'+id);showToast('Deactivated','ok');loadOffices();}catch(e){showToast(e.message,'danger');}}
+
+// APPS
+async function loadApps(){try{const apps=await API.get('/applications');document.getElementById('appCount').textContent=apps.length+' total';if(apps.filter(a=>a.status==='pending').length){document.getElementById('appBadge').textContent=apps.filter(a=>a.status==='pending').length;document.getElementById('appBadge').style.display='';}document.getElementById('aBody').innerHTML=apps.map((a,i)=>`<tr><td>${i+1}</td><td class="tn">${a.student_name||'—'}</td><td style="font-size:.8rem;">${a.sr_code||'—'}</td><td style="font-size:.8rem;">${a.office_name}</td><td style="font-size:.78rem;">${a.dept_name||'—'}</td><td>${fmtDate(a.applied_at)}</td><td>${badge(a.status)}</td><td><button class="btn btn-g btn-xs" onclick="openUpdApp(${a.id},'${a.status}')">Update</button></td></tr>`).join('');}catch(e){showToast(e.message,'danger');}}
+function openUpdApp(id,status){document.getElementById('updAppId').value=id;document.getElementById('updStatus').value=status;document.getElementById('updRemarks').value='';openModal('updAppMo');}
+async function saveApp(){try{await API.put('/applications/'+document.getElementById('updAppId').value,{status:document.getElementById('updStatus').value,remarks:document.getElementById('updRemarks').value});showToast('Updated','ok');closeModal('updAppMo');loadApps();}catch(e){showToast(e.message,'danger');}}
+
+function initSearch(inputId,tbodyId){return function(){const q=document.getElementById(inputId).value.toLowerCase();document.querySelectorAll('#'+tbodyId+' tr').forEach(r=>r.style.display=r.textContent.toLowerCase().includes(q)?'':'none');}}
+</script>
+</body>
+</html>

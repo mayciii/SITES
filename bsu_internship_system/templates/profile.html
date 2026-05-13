@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>My Profile — BatStateU-TNEU Lipa SITES</title>
+<link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <button class="ham" id="hamburger"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="nb-brand"><div class="nb-logo"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4a3 3 0 016 0v4"/></svg></div><div><span class="nb-name">BatStateU-TNEU Lipa SITES</span><span class="nb-sub">Lipa Campus</span></div></div>
+    <div class="nb-sp"></div>
+    <div class="nb-user"><div class="nb-ui"><div class="nb-name2" id="navName">—</div><div class="nb-role" id="navRole">—</div></div><div class="nb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+  </nav>
+  <div class="sb-overlay" id="sbOverlay"></div>
+  <aside class="sidebar closed" id="sidebar">
+    <div class="sb-prof"><div class="sb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="sb-name" id="sbName">—</div><div class="sb-code" id="sbCode">—</div></div></div>
+    <nav class="sb-nav" id="sidebarNav">
+      <!-- filled by JS based on role -->
+    </nav>
+  </aside>
+
+<main class="main exp" id="mainContent">
+  <div class="ph">
+    <div class="bc"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>My Profile</div>
+    <h2>My Profile</h2>
+    <p>View and manage your account information.</p>
+  </div>
+
+  <!-- Profile header -->
+  <div class="prof-hdr">
+    <div class="prof-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div class="prof-info">
+      <h2 id="pName">—</h2>
+      <p id="pProgram">—</p>
+      <div class="prof-meta">
+        <span class="prof-tag" id="pSR">—</span>
+        <span class="prof-tag" id="pDept">—</span>
+        <span class="prof-tag" id="pStatus">—</span>
+      </div>
+    </div>
+    <div style="margin-left:auto;flex-shrink:0;">
+      <button class="btn" id="editProfileBtn" onclick="openModal('editProfileMo')" style="background:#fff;color:var(--bsu);border:2px solid rgba(255,255,255,0.8);font-weight:700;border-radius:var(--r2);padding:0.6rem 1.2rem;"
+        onmouseover="this.style.background='var(--bsu-lite)';this.style.color='var(--bsu-dk)'"
+        onmouseout="this.style.background='#fff';this.style.color='var(--bsu)'">
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Edit Profile
+      </button>
+    </div>
+  </div>
+
+  <div class="two">
+    <!-- Account info -->
+    <div class="card">
+      <div class="ch"><h3>Account Information</h3></div>
+      <div class="ig" style="grid-template-columns:1fr;">
+        <div class="ii"><div class="il">Full Name</div><div class="iv" id="iName">—</div></div>
+        <div class="ii"><div class="il">Email Address</div><div class="iv" id="iEmail">—</div></div>
+        <div class="ii"><div class="il">SR Code / ID</div><div class="iv" id="iSR">—</div></div>
+        <div class="ii"><div class="il">Role</div><div class="iv" id="iRole">—</div></div>
+        <div class="ii"><div class="il">Account Status</div><div class="iv" id="iStatusVal">—</div></div>
+        <div class="ii"><div class="il">Member Since</div><div class="iv" id="iDate">—</div></div>
+      </div>
+    </div>
+
+    <!-- Academic info -->
+    <div class="card">
+      <div class="ch"><h3>Academic Information</h3></div>
+      <div class="ig" style="grid-template-columns:1fr;">
+        <div class="ii"><div class="il">College</div><div class="iv" id="iDept">—</div></div>
+        <div class="ii"><div class="il">Program</div><div class="iv" id="iProg">—</div></div>
+      </div>
+      <!-- OJT stats for students -->
+      <div id="ojtSection" style="display:none;margin-top:1.25rem;">
+        <div class="divider"></div>
+        <div class="ch" style="border:none;padding:0;margin-bottom:.75rem;"><h3>OJT Progress</h3></div>
+        <div class="fb" style="margin-bottom:.3rem;">
+          <span style="font-size:.84rem;font-weight:600;">Hours Rendered</span>
+          <span style="font-size:.84rem;color:var(--brand);font-weight:700;" id="ojtHours">0 / 486</span>
+        </div>
+        <div class="pb"><div class="pf" id="ojtBar" style="width:0%"></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem;">
+          <div style="background:var(--bg);border-radius:var(--r2);padding:.75rem;text-align:center;">
+            <div style="font-size:1.4rem;font-weight:700;font-family:'Instrument Serif',serif;color:var(--brand);" id="ojtApps">0</div>
+            <div style="font-size:.72rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Applications</div>
+          </div>
+          <div style="background:var(--bg);border-radius:var(--r2);padding:.75rem;text-align:center;">
+            <div style="font-size:1.4rem;font-weight:700;font-family:'Instrument Serif',serif;color:var(--ok);" id="ojtDocs">0</div>
+            <div style="font-size:.72rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Documents</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="card" style="margin-top:1.5rem;" id="activityCard">
+    <div class="ch"><h3>Recent Activity</h3></div>
+    <div id="activityList" style="padding:.5rem 0;">
+      <div style="text-align:center;color:var(--t4);padding:2rem;">Loading...</div>
+    </div>
+  </div>
+</main>
+
+<!-- Edit Profile Modal -->
+<div class="mo" id="editProfileMo">
+  <div class="md">
+    <div class="mdh">
+      <h3>Edit Profile</h3>
+      <button class="mdx" onclick="closeModal('editProfileMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+
+    <div class="fg"><label>Full Name</label><input type="text" id="epName" placeholder="Your full name"/></div>
+
+    <div class="divider"></div>
+    <p style="font-size:.82rem;color:var(--t3);margin-bottom:1rem;">Leave password fields blank to keep your current password.</p>
+
+    <div class="fg"><label>Current Password</label><input type="password" id="epCurPw" placeholder="Required to change password"/></div>
+    <div class="grid2">
+      <div class="fg"><label>New Password</label><input type="password" id="epNewPw" placeholder="Min. 8 characters"/></div>
+      <div class="fg"><label>Confirm New Password</label><input type="password" id="epConfPw" placeholder="Repeat new password"/></div>
+    </div>
+
+    <div id="epErr" class="al al-err" style="display:none;margin-top:.5rem;">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="epErrMsg"></span>
+    </div>
+
+    <div class="mdf">
+      <button class="btn btn-g" onclick="closeModal('editProfileMo')">Cancel</button>
+      <button class="btn btn-p" id="saveProfileBtn" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script src="/static/js/api.js"></script>
+<script>
+const STUDENT_NAV = `
+  <div class="sb-section">Main Menu</div>
+  <a href="/dashboard"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a>
+  <a href="/profile" class="on"><span class="ni"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>My Profile</a>
+  <a href="/apply"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Apply for OJT</a>
+  <a href="/status"><span class="ni"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Application Status</a>
+  <a href="/upload"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>Upload Documents</a>
+  <a href="/my_attendance"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>My Attendance</a>
+  <div class="sb-section" style="margin-top:1rem;">Account</div>
+  <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>`;
+
+const FAC_NAV = `
+  <div class="sb-section">Facilitator</div>
+  <a href="/facilitator_dashboard"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a>
+  <a href="/profile" class="on"><span class="ni"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>My Profile</a>
+  <a href="/attendance"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Attendance</a>
+  <div class="sb-section" style="margin-top:1rem;">Account</div>
+  <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>`;
+
+const ADMIN_NAV = `
+  <div class="sb-section">Admin Panel</div>
+  <a href="/admin_dashboard"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a>
+  <a href="/profile" class="on"><span class="ni"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>My Profile</a>
+  <a href="/attendance"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/></svg></span>Attendance</a>
+  <div class="sb-section" style="margin-top:1rem;">Account</div>
+  <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>`;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const u = Session.requireRole('student','facilitator','admin');
+  if (!u) return;
+  initSidebar(); initModals(); initLogout();
+
+  // Set role-appropriate sidebar nav
+  const navMap = { student: STUDENT_NAV, facilitator: FAC_NAV, admin: ADMIN_NAV };
+  document.getElementById('sidebarNav').innerHTML = navMap[u.role] || STUDENT_NAV;
+
+  try {
+    const p = await API.get('/auth/me');
+
+    // Nav
+    document.getElementById('navName').textContent  = p.full_name;
+    document.getElementById('navRole').textContent  = p.role;
+    document.getElementById('sbName').textContent   = p.full_name;
+    document.getElementById('sbCode').textContent   = p.sr_code || p.role;
+
+    // Header
+    document.getElementById('pName').textContent    = p.full_name;
+    document.getElementById('pProgram').textContent = p.program_name || p.role;
+    document.getElementById('pSR').textContent      = p.sr_code || p.email;
+    document.getElementById('pDept').textContent    = p.dept_name || 'N/A';
+    document.getElementById('pStatus').innerHTML    = badge(p.status);
+
+    // Info fields
+    document.getElementById('iName').textContent      = p.full_name;
+    document.getElementById('iEmail').textContent     = p.email;
+    document.getElementById('iSR').textContent        = p.sr_code || '—';
+    document.getElementById('iRole').innerHTML        = badge(p.role);
+    document.getElementById('iStatusVal').innerHTML   = badge(p.status);
+    document.getElementById('iDate').textContent      = fmtDate(p.created_at);
+    document.getElementById('iDept').textContent      = p.dept_name  || '—';
+    document.getElementById('iProg').textContent      = p.program_name || '—';
+
+    // Pre-fill edit form
+    document.getElementById('epName').value = p.full_name;
+
+    // Student-only OJT stats
+    if (p.role === 'student') {
+      document.getElementById('ojtSection').style.display = '';
+      const stats = await API.get('/my/stats');
+      const h = stats.total_hours || 0;
+      const pct = Math.min(100, Math.round(h / 486 * 100));
+      document.getElementById('ojtHours').textContent = h + ' / 486 hrs';
+      document.getElementById('ojtBar').style.width   = pct + '%';
+      document.getElementById('ojtApps').textContent  = stats.total_applications;
+      document.getElementById('ojtDocs').textContent  = stats.docs_uploaded;
+    }
+
+    // Activity feed
+    await loadActivity();
+
+  } catch (e) {
+    showToast(e.message, 'danger');
+  }
+});
+
+async function loadActivity() {
+  try {
+    const notifs = await API.get('/notifications');
+    const list   = document.getElementById('activityList');
+    if (!notifs.length) {
+      list.innerHTML = '<div style="text-align:center;color:var(--t4);padding:2rem;">No recent activity.</div>';
+      return;
+    }
+    const colorMap = {
+      approved:'var(--ok)', rejected:'var(--err)',
+      pending:'var(--warn)', active:'var(--info)',
+    };
+    list.innerHTML = '<div class="tl">' + notifs.map(n => `
+      <div class="tl-item">
+        <div class="tl-date">${fmtDate(n.ts)}</div>
+        <div class="tl-title" style="color:${colorMap[n.detail]||'var(--t1)'};">
+          ${n.type === 'application' ? 'Application' : 'Document'} ${n.detail}
+        </div>
+        <div class="tl-desc">${n.subject}</div>
+      </div>`).join('') + '</div>';
+  } catch {}
+}
+
+async function saveProfile() {
+  const name   = document.getElementById('epName').value.trim();
+  const curPw  = document.getElementById('epCurPw').value;
+  const newPw  = document.getElementById('epNewPw').value;
+  const confPw = document.getElementById('epConfPw').value;
+  const errBox = document.getElementById('epErr');
+  const errMsg = document.getElementById('epErrMsg');
+  const btn    = document.getElementById('saveProfileBtn');
+
+  errBox.style.display = 'none';
+
+  if (!name) { errMsg.textContent = 'Name cannot be empty.'; errBox.style.display='flex'; return; }
+  if (newPw) {
+    if (!curPw)         { errMsg.textContent = 'Enter your current password.'; errBox.style.display='flex'; return; }
+    if (newPw.length < 8){ errMsg.textContent = 'New password must be 8+ characters.'; errBox.style.display='flex'; return; }
+    if (newPw !== confPw){ errMsg.textContent = 'Passwords do not match.'; errBox.style.display='flex'; return; }
+  }
+
+  btn.disabled = true; btn.textContent = 'Saving...';
+  try {
+    const payload = { full_name: name };
+    if (newPw) { payload.current_password = curPw; payload.new_password = newPw; }
+    await API.put('/auth/profile', payload);
+
+    // Update session name
+    const sess = Session.get();
+    if (sess) { sess.full_name = name; Session.set(sess); }
+
+    closeModal('editProfileMo');
+    showToast('Profile updated successfully!', 'ok');
+    document.getElementById('navName').textContent = name;
+    document.getElementById('sbName').textContent  = name;
+    document.getElementById('pName').textContent   = name;
+    document.getElementById('iName').textContent   = name;
+    document.getElementById('epCurPw').value = '';
+    document.getElementById('epNewPw').value = '';
+    document.getElementById('epConfPw').value = '';
+  } catch (e) {
+    errMsg.textContent = e.message; errBox.style.display = 'flex';
+  }
+  btn.disabled = false; btn.textContent = 'Save Changes';
+}
+</script>
+</body>
+</html>

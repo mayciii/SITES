@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Upload Documents — BatStateU-TNEU Lipa SITES</title>
+  <link rel="stylesheet" href="/static/css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Upload Page Enhancements ── */
+    .upload-page { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Progress tracker */
+    .doc-progress-bar {
+      background: var(--s1, #f3f4f6);
+      border-radius: 99px;
+      height: 8px;
+      overflow: hidden;
+      margin-top: .5rem;
+    }
+    .doc-progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: .78rem;
+      color: var(--t3, #6b7280);
+      margin-top: .35rem;
+    }
+    .progress-label strong { color: var(--t1, #111827); }
+
+    /* Required docs checklist */
+    .req-docs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .65rem;
+      margin-top: .75rem;
+    }
+    @media (max-width: 640px) { .req-docs-grid { grid-template-columns: 1fr; } }
+
+    .req-doc-item {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .65rem .85rem;
+      border-radius: 10px;
+      border: 1.5px solid var(--bd, #e5e7eb);
+      background: var(--s1, #f9fafb);
+      cursor: pointer;
+      transition: all .18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .req-doc-item:hover { border-color: #2563eb; background: #eff6ff; }
+    .req-doc-item.status-approved {
+      border-color: #16a34a;
+      background: #f0fdf4;
+    }
+    .req-doc-item.status-pending {
+      border-color: #d97706;
+      background: #fffbeb;
+    }
+    .req-doc-item.status-rejected {
+      border-color: #dc2626;
+      background: #fef2f2;
+    }
+    .req-doc-item.active-select {
+      border-color: #2563eb;
+      background: #eff6ff;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+    }
+    .req-doc-icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: #e0e7ff;
+      color: #2563eb;
+    }
+    .req-doc-item.status-approved .req-doc-icon { background: #dcfce7; color: #16a34a; }
+    .req-doc-item.status-pending  .req-doc-icon { background: #fef3c7; color: #d97706; }
+    .req-doc-item.status-rejected .req-doc-icon { background: #fee2e2; color: #dc2626; }
+    .req-doc-info { flex: 1; min-width: 0; }
+    .req-doc-name { font-size: .8rem; font-weight: 600; color: var(--t1, #111827); line-height: 1.3; }
+    .req-doc-sub { font-size: .71rem; color: var(--t3, #6b7280); margin-top: .1rem; }
+    .req-doc-badge {
+      font-size: .67rem;
+      font-weight: 700;
+      padding: .18rem .5rem;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      flex-shrink: 0;
+    }
+    .badge-none     { background: #f3f4f6; color: #6b7280; }
+    .badge-pending  { background: #fef3c7; color: #92400e; }
+    .badge-approved { background: #dcfce7; color: #166534; }
+    .badge-rejected { background: #fee2e2; color: #991b1b; }
+    .badge-optional { background: #ede9fe; color: #5b21b6; }
+
+    /* Upload zone */
+    .uzone-v2 {
+      border: 2px dashed var(--bd, #d1d5db);
+      border-radius: 14px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s ease;
+      background: var(--s1, #f9fafb);
+      position: relative;
+    }
+    .uzone-v2:hover, .uzone-v2.drag {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+    .uzone-v2.has-file {
+      border-color: #16a34a;
+      background: #f0fdf4;
+      border-style: solid;
+    }
+    .uzone-v2 input { display:none; }
+    .uzone-icon {
+      width: 52px; height: 52px;
+      background: #e0e7ff;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto .9rem;
+      color: #2563eb;
+    }
+    .uzone-v2.has-file .uzone-icon { background: #dcfce7; color: #16a34a; }
+    .uzone-v2 h4 { font-size: .95rem; font-weight: 700; color: var(--t1, #111); margin-bottom: .25rem; }
+    .uzone-v2 p  { font-size: .79rem; color: var(--t3, #6b7280); margin-bottom: .85rem; }
+
+    /* File preview strip */
+    .file-strip {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .65rem .9rem;
+      background: var(--s1, #f3f4f6);
+      border-radius: 10px;
+      margin-top: .8rem;
+      display: none;
+    }
+    .file-strip.show { display: flex; }
+    .file-strip-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: #dbeafe;
+      color: #1d4ed8;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .file-strip-info { flex: 1; min-width: 0; }
+    .file-strip-name { font-size: .82rem; font-weight: 600; color: var(--t1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-strip-size { font-size: .73rem; color: var(--t3); }
+    .file-strip-remove {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      border: none;
+      background: #fee2e2;
+      color: #dc2626;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .file-strip-remove:hover { background: #fecaca; }
+
+    /* Selected doc pill */
+    .selected-doc-pill {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: .78rem; font-weight: 600;
+      padding: .3rem .7rem;
+      border-radius: 99px;
+      margin-bottom: .9rem;
+    }
+
+    /* Upload btn states */
+    .btn-upload-main {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      width: 100%;
+      padding: .75rem 1.25rem;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: .9rem; font-weight: 700;
+      cursor: pointer;
+      transition: all .18s;
+      margin-top: 1rem;
+    }
+    .btn-upload-main:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-upload-main:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,99,235,.3); }
+
+    /* Docs table improvements */
+    .doc-row-thumb {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-size: .81rem;
+    }
+    .doc-row-thumb span { font-weight: 600; }
+
+    /* Notice banner */
+    .notice-banner {
+      display: flex; gap: .7rem; align-items: flex-start;
+      padding: .85rem 1rem;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      font-size: .81rem;
+      color: #1e40af;
+      margin-bottom: 1.1rem;
+    }
+    .notice-banner svg { flex-shrink: 0; margin-top: .05rem; }
+
+    /* Section label */
+    .sec-label {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--t3, #6b7280); margin-bottom: .5rem;
+    }
+
+    /* Delete doc button */
+    .btn-del-doc {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--t3);
+      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-del-doc:hover { background: #fee2e2; color: #dc2626; }
+
+    /* Upload history filters */
+    .doc-filters {
+      display: flex; gap: .45rem; flex-wrap: wrap; margin-bottom: .9rem;
+    }
+    .doc-filter-btn {
+      padding: .3rem .75rem;
+      border-radius: 99px;
+      border: 1.5px solid var(--bd, #e5e7eb);
+      background: transparent;
+      font-size: .76rem; font-weight: 600; cursor: pointer;
+      color: var(--t2, #374151);
+      transition: all .15s;
+    }
+    .doc-filter-btn.active, .doc-filter-btn:hover {
+      background: #2563eb; border-color: #2563eb; color: #fff;
+    }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+
+    /* View link */
+    .view-link { font-size: .78rem; color: #2563eb; text-decoration: none; font-weight: 600; }
+    .view-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="upload-page">
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <button class="ham" id="hamburger">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="nb-brand">
+      <div class="nb-logo">
+        <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4a3 3 0 016 0v4"/></svg>
+      </div>
+      <div><span class="nb-name">BatStateU-TNEU Lipa SITES</span><span class="nb-sub">Lipa Campus</span></div>
+    </div>
+    <div class="nb-sp"></div>
+    <div class="nb-user">
+      <div class="nb-ui"><div class="nb-name2" id="navName">—</div><div class="nb-role">Student</div></div>
+      <div class="nb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    </div>
+  </nav>
+
+  <div class="sb-overlay" id="sbOverlay"></div>
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar closed" id="sidebar">
+    <div class="sb-prof">
+      <div class="sb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div><div class="sb-name" id="sbName">—</div><div class="sb-code" id="sbCode">—</div></div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section">Main Menu</div>
+      <a href="/dashboard"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a>
+      <a href="/profile"><span class="ni"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>My Profile</a>
+      <a href="/apply"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Apply for OJT</a>
+      <a href="/status"><span class="ni"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Application Status<span class="nb" id="pb" style="display:none;"></span></a>
+      <a href="/upload" class="on"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>Upload Documents</a>
+      <a href="/my_attendance"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>My Attendance</a>
+      <div class="sb-section" style="margin-top:1rem;">Account</div>
+      <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>
+    </nav>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="main exp" id="mainContent">
+    <div class="ph">
+      <div class="bc"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>Upload Documents</div>
+      <h2>Upload Documents</h2>
+      <p>Submit all required OJT documents for facilitator review.</p>
+    </div>
+
+    <!-- Overall progress banner -->
+    <div class="card" style="margin-bottom:1.25rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="font-weight:700;font-size:.95rem;color:var(--t1);">Document Submission Progress</div>
+          <div class="doc-progress-bar" style="margin-top:.5rem;">
+            <div class="doc-progress-fill" id="progressFill" style="width:0%"></div>
+          </div>
+          <div class="progress-label">
+            <span id="progressText">0 of 6 required documents submitted</span>
+            <strong id="progressPct">0%</strong>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:2rem;font-weight:800;color:#2563eb;line-height:1;" id="progressBig">0/6</div>
+          <div style="font-size:.72rem;color:var(--t3);font-weight:600;">REQUIRED</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two" style="align-items:start;gap:1.25rem;">
+
+      <!-- ── Left: Required docs checklist + uploader ── -->
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+        <!-- Required documents -->
+        <div class="card">
+          <div class="ch" style="border-bottom:1px solid var(--bd);padding-bottom:.85rem;margin-bottom:.9rem;">
+            <h3 style="display:flex;align-items:center;gap:.5rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Required Documents
+            </h3>
+            <p style="font-size:.8rem;color:var(--t3);margin-top:.15rem;">Click a document to select it for upload.</p>
+          </div>
+
+          <div class="notice-banner">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            All required documents must be submitted and approved before your OJT application can be processed.
+          </div>
+
+          <div class="sec-label">Required (6 documents)</div>
+          <div class="req-docs-grid" id="reqDocsGrid">
+            <!-- Injected by JS -->
+          </div>
+
+          <div class="sec-label" style="margin-top:1rem;">Optional</div>
+          <div class="req-docs-grid" id="optDocsGrid">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- Upload widget -->
+        <div class="card" id="uploadCard">
+          <div class="ch" style="border-bottom:1px solid var(--bd);padding-bottom:.85rem;margin-bottom:.9rem;">
+            <h3>Upload Document</h3>
+          </div>
+
+          <!-- Selected type pill -->
+          <div id="selectedPill" style="display:none;">
+            <div class="selected-doc-pill" id="pillLabel">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span id="pillText">Medical Certificate</span>
+            </div>
+          </div>
+
+          <!-- Doc type selector (manual) -->
+          <div class="fg" id="dtypeWrap">
+            <label>Document Type</label>
+            <select id="dtype">
+              <option value="">— Select document type —</option>
+              <option>Medical Certificate</option>
+              <option>Parent's Consent</option>
+              <option>Waiver</option>
+              <option>Resume / CV</option>
+              <option>Endorsement Letter</option>
+              <option>Daily Time Record</option>
+              <option>OJT Completion Report</option>
+              <option>Insurance Certificate</option>
+              <option>Barangay Clearance</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <!-- Drop zone -->
+          <div class="uzone-v2" id="uzone">
+            <div class="uzone-icon" id="uzoneIcon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <h4 id="uzoneTitle">Drag &amp; drop your file here</h4>
+            <p id="uzoneDesc">PDF, DOC, DOCX, JPG, PNG accepted · Max 10 MB</p>
+            <button class="btn btn-g btn-sm" type="button" id="browseBtn">Browse Files</button>
+            <input type="file" id="finp" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
+          </div>
+
+          <!-- File strip -->
+          <div class="file-strip" id="fileStrip">
+            <div class="file-strip-icon" id="stripIcon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="file-strip-info">
+              <div class="file-strip-name" id="stripName">—</div>
+              <div class="file-strip-size" id="stripSize">—</div>
+            </div>
+            <button class="file-strip-remove" id="removeFileBtn" title="Remove file">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <button class="btn-upload-main" id="upBtn" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Upload Document
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ── Right: submitted docs history ── -->
+      <div class="card">
+        <div class="ch" style="border-bottom:1px solid var(--bd);padding-bottom:.85rem;margin-bottom:.9rem;">
+          <h3 style="display:flex;align-items:center;gap:.5rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Submitted Documents
+          </h3>
+        </div>
+
+        <!-- Filters -->
+        <div class="doc-filters">
+          <button class="doc-filter-btn active" data-filter="all">All</button>
+          <button class="doc-filter-btn" data-filter="pending">Pending</button>
+          <button class="doc-filter-btn" data-filter="approved">Approved</button>
+          <button class="doc-filter-btn" data-filter="rejected">Rejected</button>
+        </div>
+
+        <!-- Search -->
+        <div class="fg" style="margin-bottom:.9rem;">
+          <div style="position:relative;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t3)" stroke-width="2" style="position:absolute;left:.75rem;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="docSearch" placeholder="Search documents…" style="padding-left:2.3rem;"/>
+          </div>
+        </div>
+
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>File</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="docsBody">
+              <tr><td colspan="5" style="text-align:center;color:var(--t4);padding:2.5rem;">
+                <div style="display:inline-block;width:20px;height:20px;border:2px solid #e5e7eb;border-top-color:#2563eb;border-radius:50%;animation:spin .7s linear infinite;"></div>
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /two -->
+  </main>
+
+  <script src="/static/js/api.js"></script>
+  <script>
+  // ── Config ─────────────────────────────────────────────────────────
+  const REQUIRED_DOCS = [
+    { type: 'Medical Certificate',  icon: '🏥', desc: 'Issued by a licensed physician' },
+    { type: "Parent's Consent",     icon: '👨‍👩‍👧', desc: 'Signed by parent or guardian' },
+    { type: 'Waiver',               icon: '📋', desc: 'Liability waiver form' },
+    { type: 'Resume / CV',          icon: '📄', desc: 'Updated curriculum vitae' },
+    { type: 'Endorsement Letter',   icon: '✉️', desc: 'From department / dean' },
+    { type: 'Insurance Certificate',icon: '🛡️', desc: 'Student accident insurance' },
+  ];
+  const OPTIONAL_DOCS = [
+    { type: 'Daily Time Record',    icon: '🗓️', desc: 'DTR from OJT period' },
+    { type: 'OJT Completion Report',icon: '📊', desc: 'End-of-OJT report' },
+    { type: 'Barangay Clearance',   icon: '🏛️', desc: 'Optional requirement' },
+  ];
+
+  // ── State ───────────────────────────────────────────────────────────
+  let sf = null;
+  let selectedType = '';
+  let allDocs = [];
+  let activeFilter = 'all';
+
+  // ── Init ────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', async () => {
+    const u = Session.requireRole('student');
+    if (!u) return;
+    initSidebar(); initModals(); initLogout();
+    document.getElementById('navName').textContent = u.full_name;
+    document.getElementById('sbName').textContent  = u.full_name;
+    document.getElementById('sbCode').textContent  = u.sr_code || 'Student';
+
+    renderChecklist([]);
+    await loadDocs();
+    initDropzone();
+    initFilters();
+    initSearch();
+    initDtypeSelect();
+  });
+
+  // ── Render checklist ────────────────────────────────────────────────
+  function renderChecklist(docs) {
+    const latestByType = {};
+    docs.forEach(d => {
+      if (!latestByType[d.doc_type] || d.id > latestByType[d.doc_type].id)
+        latestByType[d.doc_type] = d;
+    });
+
+    const approved = REQUIRED_DOCS.filter(d => latestByType[d.type]?.status === 'approved').length;
+    const total    = REQUIRED_DOCS.length;
+    const pct      = Math.round((approved / total) * 100);
+
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${approved} of ${total} required documents approved`;
+    document.getElementById('progressPct').textContent  = pct + '%';
+    document.getElementById('progressBig').textContent  = `${approved}/${total}`;
+
+    renderDocGrid('reqDocsGrid', REQUIRED_DOCS, latestByType);
+    renderDocGrid('optDocsGrid', OPTIONAL_DOCS, latestByType, true);
+  }
+
+  function renderDocGrid(gridId, docList, latestByType, optional = false) {
+    const grid = document.getElementById(gridId);
+    grid.innerHTML = docList.map(d => {
+      const uploaded = latestByType[d.type];
+      const status   = uploaded ? uploaded.status : 'none';
+      const statusClass = status !== 'none' ? `status-${status}` : '';
+      const badgeHtml = optional && status === 'none'
+        ? `<span class="req-doc-badge badge-optional">optional</span>`
+        : status === 'none'
+          ? `<span class="req-doc-badge badge-none">missing</span>`
+          : `<span class="req-doc-badge badge-${status}">${status}</span>`;
+
+      const icon = statusIcons[status] || statusIcons.none;
+
+      return `
+        <div class="req-doc-item ${statusClass}" data-type="${escHtml(d.type)}" onclick="selectDocType(this,'${escHtml(d.type)}')">
+          <div class="req-doc-icon">${icon}</div>
+          <div class="req-doc-info">
+            <div class="req-doc-name">${escHtml(d.type)}</div>
+            <div class="req-doc-sub">${escHtml(d.desc)}</div>
+          </div>
+          ${badgeHtml}
+        </div>`;
+    }).join('');
+  }
+
+  const statusIcons = {
+    none: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+    pending:  `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    approved: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+    rejected: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+  };
+
+  // ── Select doc type from checklist ──────────────────────────────────
+  function selectDocType(el, type) {
+    document.querySelectorAll('.req-doc-item').forEach(i => i.classList.remove('active-select'));
+    el.classList.add('active-select');
+    selectedType = type;
+    document.getElementById('dtype').value = type;
+    document.getElementById('selectedPill').style.display = 'block';
+    document.getElementById('pillText').textContent = type;
+    document.getElementById('dtypeWrap').style.display = 'none';
+    document.getElementById('uploadCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    checkUploadReady();
+  }
+
+  // ── Dtype select change ─────────────────────────────────────────────
+  function initDtypeSelect() {
+    document.getElementById('dtype').addEventListener('change', function() {
+      selectedType = this.value;
+      if (selectedType) {
+        document.getElementById('selectedPill').style.display = 'block';
+        document.getElementById('pillText').textContent = selectedType;
+      }
+      checkUploadReady();
+    });
+    // Clear selection button
+    document.getElementById('selectedPill').addEventListener('click', () => {
+      selectedType = '';
+      document.getElementById('dtype').value = '';
+      document.getElementById('selectedPill').style.display = 'none';
+      document.getElementById('dtypeWrap').style.display = '';
+      document.querySelectorAll('.req-doc-item').forEach(i => i.classList.remove('active-select'));
+      checkUploadReady();
+    });
+  }
+
+  // ── Dropzone ────────────────────────────────────────────────────────
+  function initDropzone() {
+    const zone = document.getElementById('uzone');
+    const inp  = document.getElementById('finp');
+    document.getElementById('browseBtn').addEventListener('click', () => inp.click());
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('drag');
+      if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
+    });
+    inp.addEventListener('change', () => { if (inp.files[0]) setFile(inp.files[0]); });
+    document.getElementById('removeFileBtn').addEventListener('click', clearFile);
+  }
+
+  function setFile(f) {
+    const maxMB = 10;
+    if (f.size > maxMB * 1024 * 1024) {
+      showToast(`File too large. Max ${maxMB} MB allowed.`, 'danger');
+      return;
+    }
+    sf = f;
+    const zone = document.getElementById('uzone');
+    zone.classList.add('has-file');
+    document.getElementById('uzoneTitle').textContent = 'File selected!';
+    document.getElementById('uzoneDesc').textContent  = 'Click "Browse Files" to replace it.';
+
+    const strip = document.getElementById('fileStrip');
+    strip.classList.add('show');
+    document.getElementById('stripName').textContent = f.name;
+    document.getElementById('stripSize').textContent = formatSize(f.size);
+
+    // Icon color by ext
+    const ext = f.name.split('.').pop().toLowerCase();
+    const isImg = ['jpg','jpeg','png'].includes(ext);
+    document.getElementById('stripIcon').style.background = isImg ? '#fef3c7' : '#dbeafe';
+    document.getElementById('stripIcon').style.color = isImg ? '#d97706' : '#1d4ed8';
+
+    checkUploadReady();
+  }
+
+  function clearFile() {
+    sf = null;
+    document.getElementById('finp').value = '';
+    document.getElementById('uzone').classList.remove('has-file');
+    document.getElementById('uzoneTitle').textContent = 'Drag & drop your file here';
+    document.getElementById('uzoneDesc').textContent  = 'PDF, DOC, DOCX, JPG, PNG accepted · Max 10 MB';
+    document.getElementById('fileStrip').classList.remove('show');
+    checkUploadReady();
+  }
+
+  function checkUploadReady() {
+    const dt = document.getElementById('dtype').value || selectedType;
+    document.getElementById('upBtn').disabled = !sf || !dt;
+  }
+
+  // ── Upload ──────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('upBtn').addEventListener('click', async () => {
+      if (!sf) return;
+      const docType = selectedType || document.getElementById('dtype').value;
+      if (!docType) { showToast('Please select a document type.', 'warn'); return; }
+
+      const btn = document.getElementById('upBtn');
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spin"></span> Uploading…`;
+
+      const fd = new FormData();
+      fd.append('file', sf);
+      fd.append('doc_type', docType);
+
+      try {
+        await API.upload('/documents', fd);
+        showToast('Document uploaded successfully!', 'ok');
+        clearFile();
+        selectedType = '';
+        document.getElementById('selectedPill').style.display = 'none';
+        document.getElementById('dtypeWrap').style.display = '';
+        document.getElementById('dtype').value = '';
+        document.querySelectorAll('.req-doc-item').forEach(i => i.classList.remove('active-select'));
+        await loadDocs();
+      } catch(e) {
+        showToast(e.message || 'Upload failed.', 'danger');
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload Document`;
+    });
+  });
+
+  // ── Load docs ───────────────────────────────────────────────────────
+  async function loadDocs() {
+    try {
+      allDocs = await API.get('/documents');
+    } catch(e) {
+      allDocs = [];
+    }
+    renderChecklist(allDocs);
+    renderDocsTable();
+  }
+
+  // ── Table ───────────────────────────────────────────────────────────
+  function renderDocsTable() {
+    const q = (document.getElementById('docSearch')?.value || '').toLowerCase();
+    let filtered = allDocs;
+    if (activeFilter !== 'all') filtered = filtered.filter(d => d.status === activeFilter);
+    if (q) filtered = filtered.filter(d => (d.doc_type + d.original_name).toLowerCase().includes(q));
+
+    const tbody = document.getElementById('docsBody');
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--t4);padding:2rem;">
+        ${activeFilter !== 'all' ? `No ${activeFilter} documents.` : 'No documents uploaded yet.'}
+      </td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(d => {
+      const ext = (d.original_name || '').split('.').pop().toLowerCase();
+      const extColors = { pdf:'#dc2626', doc:'#2563eb', docx:'#2563eb', jpg:'#d97706', jpeg:'#d97706', png:'#7c3aed' };
+      const extColor  = extColors[ext] || '#6b7280';
+      return `<tr data-doc-id="${d.id}">
+        <td class="tn">
+          <div style="font-weight:600;font-size:.83rem;">${escHtml(d.doc_type)}</div>
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:.4rem;">
+            <span style="font-size:.68rem;font-weight:700;padding:.15rem .4rem;border-radius:4px;background:${extColor}20;color:${extColor};text-transform:uppercase;">${ext}</span>
+            <span style="font-size:.78rem;color:var(--t2);max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${escHtml(d.original_name)}">${escHtml(d.original_name)}</span>
+          </div>
+          ${d.file_size ? `<div style="font-size:.71rem;color:var(--t4);margin-top:.1rem;">${formatSize(d.file_size)}</div>` : ''}
+        </td>
+        <td style="font-size:.79rem;color:var(--t2);white-space:nowrap;">${fmtDate(d.uploaded_at)}</td>
+        <td>${badge(d.status)}</td>
+        <td>
+          <a href="/uploads/${escHtml(d.filename)}" target="_blank" class="view-link" title="View file">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── Filters ─────────────────────────────────────────────────────────
+  function initFilters() {
+    document.querySelectorAll('.doc-filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.doc-filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeFilter = this.dataset.filter;
+        renderDocsTable();
+      });
+    });
+  }
+
+  function initSearch() {
+    document.getElementById('docSearch')?.addEventListener('input', renderDocsTable);
+  }
+
+  // ── Helpers ─────────────────────────────────────────────────────────
+  function formatSize(bytes) {
+    if (bytes >= 1024*1024) return (bytes/(1024*1024)).toFixed(1) + ' MB';
+    return (bytes/1024).toFixed(0) + ' KB';
+  }
+  function escHtml(s) {
+    return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  </script>
+</body>
+</html>

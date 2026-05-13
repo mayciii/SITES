@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Facilitator Dashboard — BatStateU-TNEU Lipa SITES</title>
+<link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <button class="ham hide-desktop" id="hamburger"><svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="nb-brand"><div class="nb-logo"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4a3 3 0 016 0v4"/></svg></div><div><span class="nb-name">BatStateU-TNEU Lipa SITES</span><span class="nb-sub">Facilitator Portal</span></div></div>
+    <div class="nb-sp"></div>
+    <div class="nb-user"><div class="nb-ui"><div class="nb-name2" id="navName">—</div><div class="nb-role">Facilitator</div></div><div class="nb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div></div>
+  </nav>
+  <div class="sb-overlay" id="sbOverlay"></div>
+  <aside class="sidebar permanent" id="sidebar">
+    <div class="sb-prof"><div class="sb-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="sb-name" id="sbName">—</div><div class="sb-code">OJT Coordinator</div></div></div>
+    <nav class="sb-nav">
+      <div class="sb-section">Facilitator</div>
+      <a href="/facilitator_dashboard" class="on"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Dashboard</a>
+      <a href="/attendance"><span class="ni"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Attendance Tracker</a>
+      <div class="sb-section" style="margin-top:1rem;">Account</div>
+      <a href="/profile"><span class="ni"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>My Profile</a>
+      <a href="#" class="signout"><span class="ni"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Sign Out</a>
+    </nav>
+  </aside>
+
+<main class="main sb-permanent" id="mainContent">
+
+  <!-- Campus Hero -->
+  <div class="campus-hero">
+    <img src="/static/img/bsu-lipa.jpg" alt="BSU Lipa" onerror="this.style.display='none'"/>
+    <div class="campus-hero-overlay">
+      <div>
+        <div class="campus-hero-kicker">Batangas State University — Lipa Campus</div>
+        <h2 id="wMsg">Good day</h2>
+        <p id="wSub">Loading your dashboard...</p>
+      </div>
+      <a href="/attendance" class="btn" style="background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3);flex-shrink:0;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Attendance Tracker
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="sg">
+    <div class="sc blu"><div class="si b"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div><div class="sn" id="s1">—</div><div class="sl">Total Students</div></div></div>
+    <div class="sc org"><div class="si o"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="sn" id="s2">—</div><div class="sl">Pending Applications</div></div></div>
+    <div class="sc grn"><div class="si g"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div><div class="sn" id="s3">—</div><div class="sl">Approved</div></div></div>
+    <div class="sc red"><div class="si r"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="sn" id="s4">—</div><div class="sl">Docs Pending Review</div></div></div>
+  </div>
+
+  <!-- Pending Applications -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <div class="ch">
+      <h3>Pending Applications</h3>
+      <span class="bx bx-pending" id="pendCount">0 pending</span>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>Student</th><th>SR Code</th><th>Office Applied</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody id="pendBody"><tr><td colspan="6" style="text-align:center;color:var(--t4);padding:2rem;">Loading...</td></tr></tbody>
+    </table></div>
+  </div>
+
+  <!-- All Applications -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <div class="ch"><h3>All Applications</h3></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>Student</th><th>Office</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody id="allBody"><tr><td colspan="5" style="text-align:center;color:var(--t4);padding:2rem;">Loading...</td></tr></tbody>
+    </table></div>
+  </div>
+
+  <!-- Documents -->
+  <div class="card">
+    <div class="ch"><h3>Student Documents for Review</h3></div>
+    <div class="tw"><table>
+      <thead><tr><th>Student</th><th>Document</th><th>Type</th><th>Uploaded</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="docBody"><tr><td colspan="6" style="text-align:center;color:var(--t4);padding:2rem;">Loading...</td></tr></tbody>
+    </table></div>
+  </div>
+
+  <!-- Evaluation Modal -->
+  <div class="mo" id="evalMo"><div class="md">
+    <div class="mdh"><h3>Evaluate Student</h3><button class="mdx" onclick="closeModal('evalMo')"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <input type="hidden" id="evalAppId"/>
+    <div class="grid2">
+      <div class="fg"><label>Attendance (0-100)</label><input type="number" id="evAtt" min="0" max="100" value="85"/></div>
+      <div class="fg"><label>Performance (0-100)</label><input type="number" id="evPerf" min="0" max="100" value="85"/></div>
+    </div>
+    <div class="grid2">
+      <div class="fg"><label>Attitude (0-100)</label><input type="number" id="evAtt2" min="0" max="100" value="85"/></div>
+      <div class="fg"><label>Skills (0-100)</label><input type="number" id="evSkill" min="0" max="100" value="85"/></div>
+    </div>
+    <div class="fg"><label>Comments</label><textarea id="evComment" rows="3" placeholder="Optional feedback..."></textarea></div>
+    <div class="mdf"><button class="btn btn-g" onclick="closeModal('evalMo')">Cancel</button><button class="btn btn-p" onclick="submitEval()">Submit Evaluation</button></div>
+  </div></div>
+
+</main>
+
+<script src="/static/js/api.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const u = Session.requireRole("facilitator"); if(!u) return;
+  initSidebar(); initModals(); initLogout();
+  document.getElementById("navName").textContent = u.full_name;
+  document.getElementById("sbName").textContent  = u.full_name;
+  document.getElementById("wMsg").textContent    = "Good day, " + u.full_name.split(" ")[0];
+  try {
+    const [st, apps, docs] = await Promise.all([API.get("/stats"), API.get("/applications"), API.get("/documents")]);
+    document.getElementById("s1").textContent = st.total_students;
+    document.getElementById("s2").textContent = st.pending_apps;
+    document.getElementById("s3").textContent = st.approved_apps;
+    document.getElementById("s4").textContent = st.docs_pending;
+    document.getElementById("wSub").textContent = st.pending_apps > 0
+      ? `You have ${st.pending_apps} pending application(s) awaiting review.`
+      : "All applications are up to date.";
+
+    const pend = apps.filter(a => a.status === "pending");
+    document.getElementById("pendCount").textContent = pend.length + " pending";
+    document.getElementById("pendBody").innerHTML = pend.length
+      ? pend.map((a,i) => `<tr><td>${i+1}</td><td class="tn">${a.student_name||"—"}</td><td style="font-size:.81rem;">${a.sr_code||"—"}</td><td style="font-size:.81rem;">${a.office_name}</td><td>${fmtDate(a.applied_at)}</td><td><div class="bg"><button class="btn btn-ok btn-sm" onclick="updApp(${a.id},'approved')">Accept</button><button class="btn btn-d btn-sm" onclick="updApp(${a.id},'rejected')">Reject</button></div></td></tr>`).join("")
+      : "<tr><td colspan='6' style='text-align:center;color:var(--t4);padding:1.5rem;'>No pending applications.</td></tr>";
+
+    document.getElementById("allBody").innerHTML = apps.map((a,i) => `<tr><td>${i+1}</td><td class="tn">${a.student_name||"—"}</td><td style="font-size:.81rem;">${a.office_name}</td><td>${fmtDate(a.applied_at)}</td><td>${badge(a.status)}</td></tr>`).join("");
+
+    document.getElementById("docBody").innerHTML = docs.length
+      ? docs.map(d => `<tr>
+          <td class="tn">${d.student_name||"—"}<div class="ts">${d.sr_code||""}</div></td>
+          <td style="font-size:.81rem;">${d.original_name}</td>
+          <td style="font-size:.81rem;">${d.doc_type}</td>
+          <td>${fmtDate(d.uploaded_at)}</td>
+          <td>${badge(d.status)}</td>
+          <td>
+            <div class="bg">
+              <a class="btn btn-sm" style="background:#3b82f6;color:#fff;text-decoration:none;padding:.25rem .6rem;font-size:.78rem;" href="/uploads/${d.filename}" target="_blank">
+                <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2;vertical-align:middle;margin-right:2px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View
+              </a>
+              <a class="btn btn-sm" style="background:#10b981;color:#fff;text-decoration:none;padding:.25rem .6rem;font-size:.78rem;" href="/uploads/${d.filename}" download="${d.original_name}">
+                <svg viewBox="0 0 24 24" style="width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2;vertical-align:middle;margin-right:2px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download
+              </a>
+              ${d.status==="pending"?`<button class="btn btn-ok btn-xs" onclick="updDoc(${d.id},'approved')">Approve</button><button class="btn btn-d btn-xs" onclick="updDoc(${d.id},'rejected')">Reject</button>`:""}
+            </div>
+          </td>
+        </tr>`).join("")
+      : "<tr><td colspan='6' style='text-align:center;color:var(--t4);padding:1.5rem;'>No documents submitted yet.</td></tr>";
+  } catch(e) { showToast(e.message, "danger"); }
+});
+
+async function updApp(id,s) {
+  try { await API.put("/applications/"+id, {status:s}); showToast("Application "+s, "ok"); location.reload(); }
+  catch(e) { showToast(e.message, "danger"); }
+}
+async function updDoc(id,s) {
+  try { await API.put("/documents/"+id, {status:s}); showToast("Document "+s, "ok"); location.reload(); }
+  catch(e) { showToast(e.message, "danger"); }
+}
+async function submitEval() {
+  try {
+    await API.post("/evaluations", {
+      application_id: parseInt(document.getElementById("evalAppId").value),
+      attendance: parseFloat(document.getElementById("evAtt").value),
+      performance: parseFloat(document.getElementById("evPerf").value),
+      attitude: parseFloat(document.getElementById("evAtt2").value),
+      skills: parseFloat(document.getElementById("evSkill").value),
+      comments: document.getElementById("evComment").value
+    });
+    showToast("Evaluation submitted!", "ok");
+    closeModal("evalMo");
+  } catch(e) { showToast(e.message, "danger"); }
+}
+</script>
+</body>
+</html>
