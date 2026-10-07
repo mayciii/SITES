@@ -65,7 +65,7 @@ pip install -r requirements.txt
 ### 3. Create your `.env` file
 Create a `.env` file in the `bsu_internship_system` folder:
 ```
-SECRET_KEY=bsu-ojt-secret-2024-lipa
+SECRET_KEY=
 MYSQL_HOST=localhost
 MYSQL_PORT=3306
 MYSQL_USER=root
